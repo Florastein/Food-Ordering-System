@@ -235,6 +235,13 @@ function searchFood() {
 
 //const user_id = localStorage.getItem("user_id") || "guest123"; 
 function addToCart(food_id) {
+    const user_id = localStorage.getItem("user_id");
+    if (!user_id) {
+        alert("You must be logged in to add items to your cart!");
+        window.location.href = "login.html"; // Redirect to login page
+        return;
+    }
+
     fetch("http://localhost:3000/add-to-cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -244,6 +251,7 @@ function addToCart(food_id) {
     .then(() => alert("Item added to cart!"))
     .catch(error => console.error("Error adding to cart:", error));
 }
+
 
 // Fetch and display cart items
 function displayCart() {

@@ -81,13 +81,17 @@ app.get("/search-food", (req, res) => {
 app.post("/add-to-cart", (req, res) => {
     const { user_id, food_id, quantity } = req.body;
 
+    if (!user_id) {
+        return res.status(401).json({ error: "User not logged in" });
+    }
+
     db.get(`SELECT * FROM cart WHERE user_id = ? AND food_id = ?`, [user_id, food_id], (err, row) => {
         if (row) {
             db.run(`UPDATE cart SET quantity = quantity + ? WHERE user_id = ? AND food_id = ?`, 
                 [quantity, user_id, food_id], 
                 (err) => {
                     if (err) return res.status(500).json({ error: err.message });
-                    res.json({ message: "Cart updated" });
+                    res.json({ message: "Cart updated successfully!" });
                 }
             );
         } else {
@@ -95,7 +99,7 @@ app.post("/add-to-cart", (req, res) => {
                 [user_id, food_id, quantity], 
                 function (err) {
                     if (err) return res.status(500).json({ error: err.message });
-                    res.json({ id: this.lastID, message: "Item added to cart" });
+                    res.json({ id: this.lastID, message: "Item added to cart!" });
                 }
             );
         }
