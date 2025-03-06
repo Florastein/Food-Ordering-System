@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="card-body text-center">
                             <h5 class="card-title">${food.name}</h5>
                             <p class="card-text">GH₵ ${food.price.toFixed(2)}</p>
-                            <button class="btn btn-success" onclick="addToCart('${food.name}', ${food.price}, 'http://localhost:3000${food.image}')">Add to Cart</button>
+                            <button class="btn btn-success" onclick="addToCart(${food.id})">Add to Cart</button>
                         </div>
                     </div>
                 `;
@@ -223,7 +223,7 @@ function searchFood() {
                         <div class="card-body text-center">
                             <h5 class="card-title">${food.name}</h5>
                             <p class="card-text">GH₵ ${food.price.toFixed(2)}</p>
-                            <button class="btn btn-success" onclick="addToCart('${food.name}', ${food.price}, 'http://localhost:3000${food.image}')">Add to Cart</button>
+                            <button class="btn btn-success" onclick="addToCart(${food.id})">Add to Cart</button>
                         </div>
                     </div>
                 `;
@@ -300,3 +300,19 @@ function clearCart() {
         .then(() => displayCart())
         .catch(error => console.error("Error clearing cart:", error));
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const logoutBtn = document.getElementById("logout-btn");
+    const user_id = localStorage.getItem("user_id");
+
+    if (user_id) {
+        logoutBtn.classList.remove("d-none"); // Show logout button
+    }
+
+    logoutBtn.addEventListener("click", function () {
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("username");
+        alert("You have been logged out.");
+        window.location.href = "login.html"; // Redirect to login page
+    });
+});

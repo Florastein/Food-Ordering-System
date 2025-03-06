@@ -4,6 +4,8 @@ const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const open = require("open");
+const os = require("os");
 
 const app = express();
 app.use(express.json());
@@ -193,7 +195,77 @@ app.post("/update-cart", (req, res) => {
     });
 });
 
+app.post("/place-order", (req, res) => {
+    const { user_id, name, email, phone, address, paymentMethod, totalAmount } = req.body;
+
+    if (!user_id) {
+        return res.status(401).json({ error: "User not logged in" });
+    }
+
+    db.run(
+        `INSERT INTO orders (user_id, name, email, phone, address, payment_method, total_amount, status) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')`,
+        [user_id, name, email, phone, address, paymentMethod, totalAmount],
+        function (err) {
+            if (err) return res.status(500).json({ error: err.message });
+
+            // Clear the cart after order placement
+            db.run(`DELETE FROM cart WHERE user_id = ?`, [user_id], function (err) {
+                if (err) return res.status(500).json({ error: err.message });
+                res.json({ success: true, orderId: this.lastID });
+            });
+        }
+    );
+});
+
+app.get("/latest-order/:user_id", (req, res) => {
+    const { user_id } = req.params;
+
+    db.get(
+        `SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT 1`, 
+        [user_id], 
+        (err, order) => {
+            if (err) return res.status(500).json({ error: err.message });
+            if (!order) return res.status(404).json({ error: "No recent orders found." });
+
+            db.all(
+                `SELECT foods.name, foods.price, cart.quantity 
+                 FROM cart 
+                 JOIN foods ON cart.food_id = foods.id 
+                 WHERE cart.user_id = ?`,
+                [user_id],
+                (err, items) => {
+                    if (err) return res.status(500).json({ error: err.message });
+                    res.json({ order, items });
+                }
+            );
+        }
+    );
+});
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname,  "public",));
+});
+
+
 const PORT = 3000;
+app.use(express.static(path.join(__dirname, "public")));
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    const interfaces = os.networkInterfaces();
+    let localIP = "localhost";
+
+    for (let key in interfaces) {
+        for (let iface of interfaces[key]) {
+            if (iface.family === "IPv4" && !iface.internal) {
+                localIP = iface.address; // Get the local network IP
+            }
+        }
+    }
+    
+
+    console.log(`Server is running on:`);
+    console.log(`➡  Local:   http://localhost:${PORT}`);
+    console.log(`➡  LAN:     http://${localIP}:${PORT}`);
+
+    //open(`http://localhost:${PORT}/login.html`); // Open on the local machine
 });

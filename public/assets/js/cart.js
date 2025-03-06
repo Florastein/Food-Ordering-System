@@ -197,7 +197,7 @@ function checkLogin() {
     const user_id = localStorage.getItem("user_id");
     if (!user_id) {
         alert("You must be logged in to access this page!");
-        window.location.href = "login.html";
+        window.location.href = "public/login.html";
     }
 }
 

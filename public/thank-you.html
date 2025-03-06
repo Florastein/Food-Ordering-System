@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thank You | Canteen Ordering</title>
-    <link rel="stylesheet" href="assets/css/thank-you.css">
+    <link rel="stylesheet" href="public/assets/css/thank-you.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="index.html">🍽️ Canteen</a>
@@ -17,16 +18,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
-                <li class="nav-item"><a class="nav-link" href="cart.html">Cart 🛒</a></li>
+                <li class="nav-item"><a class="nav-link" href="public/index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="public/menu.html">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" href="public/cart.html">Cart 🛒</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
+<!-- Thank You Section -->
 <div class="container text-center mt-5">
-    <div class="card shadow p-5">
+    <div class="card shadow-lg p-5 rounded">
         <h1 class="text-success">🎉 Thank You for Your Order! 🎉</h1>
         <p class="lead">Your order has been successfully placed.</p>
         <h4>Estimated Delivery Time: <span class="text-primary">30-45 mins</span></h4>
@@ -34,15 +36,19 @@
 
         <h5 class="mt-4">Order Summary</h5>
         <ul class="list-group mb-3" id="order-summary">
+            <!-- Order details will be injected dynamically -->
         </ul>
 
+        <h5 class="text-success">Total Paid: <span id="total-price">GH₵ 0.00</span></h5>
+
         <div class="mt-4">
-            <a href="menu.html" class="btn btn-primary">Order More</a>
-            <a href="index.html" class="btn btn-outline-secondary">Go to Home</a>
+            <a href="menu.html" class="btn btn-primary">🍔 Order More</a>
+            <a href="index.html" class="btn btn-outline-secondary">🏠 Go to Home</a>
         </div>
     </div>
 </div>
 
+<!-- Footer -->
 <footer class="bg-dark text-white text-center py-3 mt-5">
     &copy; 2025 Canteen Ordering System | All Rights Reserved
 </footer>
