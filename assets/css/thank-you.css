@@ -1,0 +1,19 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.card {
+    max-width: 600px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.text-success {
+    font-size: 2rem;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+}

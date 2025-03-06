@@ -1,0 +1,33 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.table {
+    width: 100%;
+}
+
+.list-group a {
+    text-decoration: none;
+    color: black;
+}
+
+.list-group-item.active {
+    background-color: #007bff;
+    color: white;
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}

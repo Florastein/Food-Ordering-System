@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">🍽️ Canteen</a>
+        <a class="btn btn-primary" href="menu.html">Continue Shopping</a>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Your Cart</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="cartItems"></tbody>
+    </table>
+    <h3 class="text-end">Total: GH&#8373; <span id="cartTotal">0.00</span></h3>
+    <button class="btn btn-success w-100" onclick="checkout()">Proceed to Checkout</button>
+    <button class="btn btn-danger" id="clear-cart">Clear Cart</button>
+</div>
+
+<!--<footer class="bg-dark text-white text-center py-3">
+    &copy; 2025 Canteen Ordering System | All Rights Reserved
+</footer>-->
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/cart.js"></script>
+<script>
+    function displayCart() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cartTable = document.getElementById("cartItems");
+        let total = 0;
+        cartTable.innerHTML = "";
+
+        cart.forEach((item, index) => {
+            let itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            cartTable.innerHTML += `
+                <tr>
+                    <td><img src="${item.image}" width="50"></td>
+                    <td>${item.name}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>
+                        <button onclick="updateQuantity(${index}, -1)">-</button>
+                        ${item.quantity}
+                        <button onclick="updateQuantity(${index}, 1)">+</button>
+                    </td>
+                    <td>$${itemTotal.toFixed(2)}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button></td>
+                </tr>
+            `;
+        });
+
+        document.getElementById("cartTotal").textContent = total.toFixed(2);
+    }
+
+    function updateQuantity(index, change) {
+        let cart = JSON.parse(localStorage.getItem("cart"));
+        if (cart[index].quantity + change > 0) {
+            cart[index].quantity += change;
+        } else {
+            cart.splice(index, 1);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        displayCart();
+    }
+
+    function removeFromCart(index) {
+        let cart = JSON.parse(localStorage.getItem("cart"));
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        displayCart();
+    }
+
+    function checkout() {
+        alert("Order placed successfully!");
+        localStorage.removeItem("cart");
+        window.location.href = "checkout.html";
+    }
+
+    displayCart();
+</script>
+
+</body>
+</html>
