@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             const popularDishesContainer = document.getElementById("popular-dishes");
-            popularDishesContainer.innerHTML = ""; // Clear existing content
+            popularDishesContainer.innerHTML = "";
 
             data.forEach(dish => {
                 let dishCard = document.createElement("div");
