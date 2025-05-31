@@ -61,8 +61,8 @@ Add/remove menu items via /uploads and database.
 
 ## 📜 License
 ![License](https://img.shields.io/github/license/Florastein/Food-Ordering-System)
-![Stars](https://img.shields.io/github/stars/Florastein/Food-Ordering-System.git?style=social)
-![Last Commit](https://img.shields.io/github/last-commit/Florastein/Food-Ordering-System.git)
+![Stars](https://img.shields.io/github/stars/Florastein/Food-Ordering-System?style=social)
+![Last Commit](https://img.shields.io/github/last-commit/Florastein/Food-Ordering-System)
 
 ##💡 Future Improvements
 Add payment integration (Stripe/PayPal).
